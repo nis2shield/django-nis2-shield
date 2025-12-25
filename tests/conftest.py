@@ -3,61 +3,6 @@ Pytest configuration for Django NIS2 Shield tests.
 """
 import pytest
 from django.conf import settings
-from cryptography.fernet import Fernet
-
-# Define settings configuration in a hook to ensure it runs at the right time
-def pytest_configure():
-    if not settings.configured:
-        settings.configure(
-            SECRET_KEY='test-secret-key',
-            DATABASES={
-                'default': {
-                    'ENGINE': 'django.db.backends.sqlite3',
-                    'NAME': ':memory:',
-                }
-            },
-            INSTALLED_APPS=[
-                'django.contrib.auth',
-                'django.contrib.contenttypes',
-                'django.contrib.sessions',
-                'django_nis2_shield',
-            ],
-            MIDDLEWARE=[
-                'django.contrib.sessions.middleware.SessionMiddleware',
-                'django.contrib.auth.middleware.AuthenticationMiddleware',
-                'django_nis2_shield.middleware.Nis2GuardMiddleware',
-            ],
-            ROOT_URLCONF=__name__,
-            CACHES={
-                'default': {
-                    'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-                    'LOCATION': 'unique-snowflake',
-                }
-            },
-            NIS2_SHIELD={
-                'INTEGRITY_KEY': 'test-integrity-key',
-                'ENCRYPTION_KEY': Fernet.generate_key().decode(),
-                'ANONYMIZE_IPS': True,
-                'ENABLE_RATE_LIMIT': True,
-                'BLOCK_TOR_EXIT_NODES': True,
-                'ENCRYPT_PII': True,
-                'PII_FIELDS': ['user_id', 'ip', 'email'],
-                'LOG_FORMAT': 'JSON',
-            },
-            USE_TZ=True,
-        )
-    try:
-        import django
-        django.setup()
-    except Exception:
-        pass
-
-
-@pytest.fixture
-def django_settings():
-    """Return the Django settings object."""
-    return settings
-
 
 @pytest.fixture
 def nis2_settings(settings):

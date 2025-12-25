@@ -1,0 +1,11 @@
+apiVersion: 1
+
+providers:
+  - name: 'NIS2 Shield'
+    orgId: 1
+    folder: 'NIS2 Shield'
+    type: file
+    disableDeletion: false
+    updateIntervalSeconds: 10
+    options:
+      path: /etc/grafana/provisioning/dashboards

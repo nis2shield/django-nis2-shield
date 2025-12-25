@@ -1,0 +1,101 @@
+﻿Project Name: Django NIS2 Shield
+Tagline: Il Middleware "Security-First" per rendere le applicazioni Django conformi (by design) ai requisiti di logging e monitoraggio della Direttiva NIS2.
+1. Visione del Progetto
+L'obiettivo è creare una libreria Python (pip install django-nis2-shield) plug-and-play che agisca come un layer di sicurezza attivo all'interno del framework Django.
+Non è solo un logger: è un "guardiano" che intercetta traffico, normalizza i dati per i SIEM, protegge l'identità e fornisce metriche di conformità immediate.
+Filosofia: "Compliance by Configuration" & Zero Trust.
+Lo sviluppatore non deve riscrivere le viste; installa il middleware e l'applicazione inizia a produrre audit log certificabili. Inoltre, il sistema adotta un approccio Zero Trust: ogni richiesta viene verificata nel contesto, non fidandosi ciecamente del cookie di sessione.
+2. Architettura del Middleware
+Il core del progetto è un singolo pacchetto che espone tre componenti principali:
+A. Il "Logger Forense" (Passive Layer)
+Non un semplice print, ma un logger strutturato che produce output in formato JSON/CEF standardizzato per l'ingestione da parte di SIEM (Intrusa, Elastic, Splunk).
+* Dati catturati:
+   * WHO: User ID, IP Address (anonimizzato se richiesto), User Agent.
+   * WHAT: URL, HTTP Method, Payload (sanitizzato dalle password), View Name.
+   * RESULT: Status Code, Tempo di esecuzione, Stack trace (in caso di 500).
+   * INTEGRITY: Hash SHA-256 della riga di log (HMAC) per garantire che il log non sia stato manomesso (Requisito Non-Repudiation).
+   * CONFIDENTIALITY: Cifratura automatica di campi PII (Dati Personali) all'interno del log stesso per bilanciare NIS2 e GDPR.
+B. L' "Enforcer" (Active Layer)
+Modulo opzionale che blocca le richieste prima che tocchino la logica di business, proteggendo la Disponibilità del servizio (Availability).
+* Rate Limiting Intelligente: Blocca IP che generano troppi 4xx (scan) o 5xx, mitigando attacchi DoS applicativi.
+* Session Guard: Invalida la sessione se l'IP o il Fingerprint del device cambia improvvisamente durante la sessione attiva (Anti-Hijacking).
+* MFA Gatekeeper: Middleware hook per forzare il reindirizzamento a una pagina 2FA se l'utente accede a path sensibili (es. /admin/*, /finance/*) senza un flag di sessione is_verified_mfa.
+C. L' "Auditor" (Management Command)
+Un comando CLI (python manage.py check_nis2) che scansiona la configurazione di Django (settings.py) e restituisce un report.
+3. Matrice di Conformità NIS2
+Cosa risolve la libreria rispetto agli articoli della direttiva e alla Triade CIA:
+Articolo / Tema NIS2
+	Soluzione django-nis2-shield
+	Incident Handling (Art. 21)
+	Fornisce log strutturati per la notifica rapida (Early Detection) richiesta entro 24h.
+	Disponibilità (Availability)
+	Il Rate Limiter protegge l'uptime mitigando attacchi DoS a livello applicativo.
+	Integrità (Integrity)
+	I log sono firmati digitalmente (HMAC). Forza l'uso di HTTPS/HSTS.
+	Riservatezza (Confidentiality)
+	Cifratura dei dati sensibili nei log e protezione accessi (MFA/Session Guard).
+	Sicurezza Supply Chain
+	Essendo Open Source, il codice è auditable. Riduce la dipendenza da black-box esterne.
+	Controllo Accessi
+	Introduce controlli contestuali su Session Hijacking e Brute Force.
+	4. Esempio di Implementazione (Draft Code)
+Installazione
+pip install django-nis2-shield
+
+
+Configurazione (settings.py)
+INSTALLED_APPS = [
+   ...,
+   'django_nis2_shield',
+]
+
+MIDDLEWARE = [
+   'django.middleware.security.SecurityMiddleware',
+   'django.contrib.sessions.middleware.SessionMiddleware',
+   # IL NOSTRO SCUDO QUI: Subito dopo la sessione, prima delle View
+   'django_nis2_shield.middleware.Nis2GuardMiddleware', 
+   'django.middleware.common.CommonMiddleware',
+   ...
+]
+
+# Configurazione NIS2
+NIS2_SHIELD = {
+   'LOG_FORMAT': 'JSON',  # o 'CEF'
+   'ANONYMIZE_IPS': True, # GDPR compliance
+   'INTEGRITY_KEY': 'secret-key-for-log-hashing',
+   'ENFORCE_MFA_ROUTES': ['/admin/', '/api/v1/payments/'],
+   'RATE_LIMIT_THRESHOLD': 100, # richieste/minuto
+   'BLOCK_TOR_EXIT_NODES': True, # Opzionale: Blocca traffico anonimo
+}
+
+
+Il Comando di Audit (Output Esempio)
+Eseguendo python manage.py check_nis2:
+[NIS2 SHIELD AUDIT REPORT]
+------------------------------------------------
+[PASS] DEBUG is False
+[PASS] ALLOWED_HOSTS is configured correctly
+[PASS] Password Validators are strong (NIST guidelines)
+[FAIL] SESSION_COOKIE_SECURE is False (CRITICAL for NIS2)
+[WARN] MFA is not enforced on /admin/ path
+------------------------------------------------
+COMPLIANCE SCORE: 78/100
+Action Required: Set SESSION_COOKIE_SECURE = True in settings.py
+
+
+5. Roadmap di Sviluppo
+* Fase 1 (MVP):
+   * Middleware di Logging strutturato (JSON) con HMAC.
+   * Comando check_nis2 base.
+* Fase 2 (Active Defense & Reporting):
+   * Implementazione Rate Limiting (usando Django Cache).
+   * Session Hijacking detector.
+   * Incident Report Generator: Comando per estrarre JSON degli ultimi incidenti pronti per la notifica al CSIRT (deadline 24h).
+* Fase 3 (Integrazione SIEM):
+   * Preset pronti per inviare dati a Intrusa, Elastic Stack, Graylog.
+   * Dashboard Docker di esempio per visualizzare i log.
+6. Perché Open Source?
+La sicurezza non deve essere oscura. Rendendo il codice pubblico:
+1. Trust: Le aziende possono verificare cosa fa il codice (niente backdoor).
+2. Community: Altri sviluppatori aggiungeranno supporti per nuovi SIEM o regole di validazione.
+3. Standard: Creare uno standard de facto per la PA italiana e le PMI.

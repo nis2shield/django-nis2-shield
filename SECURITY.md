@@ -1,54 +1,54 @@
 # Security Policy
 
-## Versioni Supportate
+## Supported Versions
 
-| Versione | Supportata |
-|----------|------------|
-| 0.2.x    | ✅ Sì      |
-| 0.1.x    | ⚠️ Solo bug critici |
-| < 0.1    | ❌ No      |
+| Version | Supported |
+|---------|-----------|
+| 0.2.x   | ✅ Yes    |
+| 0.1.x   | ⚠️ Critical bugs only |
+| < 0.1   | ❌ No     |
 
-## Segnalare una Vulnerabilità
+## Reporting a Vulnerability
 
-**⚠️ NON aprire issue pubbliche per vulnerabilità di sicurezza.**
+**⚠️ Do NOT open public issues for security vulnerabilities.**
 
-Se scopri una vulnerabilità di sicurezza in Django NIS2 Shield:
+If you discover a security vulnerability in Django NIS2 Shield:
 
-1. **Email**: Invia una descrizione dettagliata a `security@nis2shield.com`
-2. **Oggetto**: `[SECURITY] Django NIS2 Shield - Breve descrizione`
-3. **Includi**:
-   - Descrizione della vulnerabilità
-   - Passi per riprodurla
-   - Impatto potenziale
-   - Eventuale fix proposto
+1. **Email**: Send a detailed description to `security@nis2shield.com`
+2. **Subject**: `[SECURITY] Django NIS2 Shield - Brief description`
+3. **Include**:
+   - Description of the vulnerability
+   - Steps to reproduce
+   - Potential impact
+   - Proposed fix (if any)
 
-### Cosa Aspettarsi
+### What to Expect
 
-| Fase | Tempo |
-|------|-------|
-| Conferma ricezione | 48 ore |
-| Prima valutazione | 7 giorni |
-| Fix rilasciato | 30 giorni (dipende dalla gravità) |
+| Phase | Timeframe |
+|-------|-----------|
+| Acknowledgment | 48 hours |
+| Initial assessment | 7 days |
+| Fix released | 30 days (depending on severity) |
 
-### Disclosure Responsabile
+### Responsible Disclosure
 
-- Ti chiediamo di non divulgare pubblicamente la vulnerabilità prima del fix
-- Verrai accreditato nel CHANGELOG (se lo desideri)
-- Non intraprendiamo azioni legali contro ricercatori in buona fede
+- We ask that you do not publicly disclose the vulnerability before a fix is released.
+- You will be credited in the CHANGELOG (if you wish).
+- We will not take legal action against researchers acting in good faith.
 
-## Best Practices per Chi Usa la Libreria
+## Best Practices for Users
 
-1. **Aggiorna regolarmente**: `pip install --upgrade django-nis2-shield`
-2. **Chiavi sicure**: Non usare chiavi di default in produzione
-3. **Monitora i log**: I log generati vanno analizzati attivamente
-4. **Defense in depth**: Questa libreria è un layer, non una soluzione completa
+1. **Update regularly**: `pip install --upgrade django-nis2-shield`
+2. **Secure keys**: Do not use default keys in production.
+3. **Monitor logs**: Generated logs must be actively analyzed.
+4. **Defense in depth**: This library is a layer, not a complete solution.
 
-## Audit di Sicurezza
+## Security Audit
 
-Questo progetto **non è stato ancora sottoposto ad audit di sicurezza professionale**.
+This project **has not yet undergone a professional security audit**.
 
-Se sei un esperto di sicurezza e vuoi contribuire con una review, sei il benvenuto! Vedi [CONTRIBUTING.md](CONTRIBUTING.md).
+If you are a security expert and want to contribute with a review, you are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ---
 
-*Questa policy è ispirata alle best practice di [security.txt](https://securitytxt.org/).*
+*This policy is inspired by [security.txt](https://securitytxt.org/) best practices.*

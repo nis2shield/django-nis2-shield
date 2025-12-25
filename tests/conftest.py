@@ -37,19 +37,14 @@ def pytest_configure():
             CACHES={
                 'default': {
                     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
+                    'LOCATION': 'unique-snowflake',
                 }
             },
             NIS2_SHIELD={
-                'INTEGRITY_KEY': 'test-secret-key',
-                'ENCRYPTION_KEY': TEST_ENCRYPTION_KEY,
+                'INTEGRITY_KEY': 'test-integrity-key',
+                'ENCRYPTION_KEY': Fernet.generate_key().decode(),
                 'ANONYMIZE_IPS': True,
-                'ENCRYPT_PII': True,
-                'PII_FIELDS': ['user_id', 'email', 'ip', 'user_agent'],
                 'ENABLE_RATE_LIMIT': True,
-                'RATE_LIMIT_THRESHOLD': 100,
-                'ENABLE_SESSION_GUARD': True,
-                'SESSION_IP_TOLERANCE': 'subnet',
-                'BLOCK_TOR_EXIT_NODES': False,
                 'ENFORCE_MFA_ROUTES': [],
             },
         )

@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import MagicMock, patch
 from django.conf import settings
 from django.core.cache import cache
-from django.test import override_settings
+from django.test import SimpleTestCase, override_settings
 
 from django_nis2_shield.enforcer import RateLimiter, SessionGuard, TorBlocker
 from django_nis2_shield.utils import get_subnet
@@ -15,7 +15,7 @@ from django_nis2_shield.utils import get_subnet
     'BLOCK_TOR_EXIT_NODES': True,
     'ENCRYPTION_KEY': 'test-key', # Required by other components potentially
 })
-class TestEnforcer(unittest.TestCase):
+class TestEnforcer(SimpleTestCase):
     def setUp(self):
         cache.clear()
 

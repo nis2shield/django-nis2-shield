@@ -26,4 +26,6 @@ jobs:
           pip install django==${{ matrix.django-version }} pytest pytest-django cryptography
           pip install .
       - name: Run Tests
+        env:
+          PYTHONPATH: .
         run: pytest

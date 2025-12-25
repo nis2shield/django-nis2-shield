@@ -2,29 +2,19 @@ import unittest
 from unittest.mock import MagicMock, patch
 from django.conf import settings
 from django.core.cache import cache
-
-# Ensure settings are configured
-if not settings.configured:
-    settings.configure(
-        NIS2_SHIELD={
-            'RATE_LIMIT_THRESHOLD': 5,
-            'ENABLE_RATE_LIMIT': True,
-            'SESSION_IP_TOLERANCE': 'subnet',
-            'ENABLE_SESSION_GUARD': True,
-            'BLOCK_TOR_EXIT_NODES': True
-        },
-        CACHES={
-            'default': {
-                'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
-            }
-        },
-        INSTALLED_APPS=['django_nis2_shield'],
-        LOGIN_URL='/login/'
-    )
+from django.test import override_settings
 
 from django_nis2_shield.enforcer import RateLimiter, SessionGuard, TorBlocker
 from django_nis2_shield.utils import get_subnet
 
+@override_settings(NIS2_SHIELD={
+    'RATE_LIMIT_THRESHOLD': 5,
+    'ENABLE_RATE_LIMIT': True,
+    'SESSION_IP_TOLERANCE': 'subnet',
+    'ENABLE_SESSION_GUARD': True,
+    'BLOCK_TOR_EXIT_NODES': True,
+    'ENCRYPTION_KEY': 'test-key', # Required by other components potentially
+})
 class TestEnforcer(unittest.TestCase):
     def setUp(self):
         cache.clear()

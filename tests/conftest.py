@@ -5,15 +5,11 @@ import pytest
 from django.conf import settings
 from cryptography.fernet import Fernet
 
-# Generate a valid Fernet key for testing
-TEST_ENCRYPTION_KEY = Fernet.generate_key()
-
-
+# Define settings configuration in a hook to ensure it runs at the right time
 def pytest_configure():
-    """Configure Django settings for pytest."""
     if not settings.configured:
         settings.configure(
-            DEBUG=True,
+            SECRET_KEY='test-secret-key',
             DATABASES={
                 'default': {
                     'ENGINE': 'django.db.backends.sqlite3',
@@ -21,19 +17,17 @@ def pytest_configure():
                 }
             },
             INSTALLED_APPS=[
-                'django.contrib.contenttypes',
                 'django.contrib.auth',
+                'django.contrib.contenttypes',
                 'django.contrib.sessions',
                 'django_nis2_shield',
             ],
             MIDDLEWARE=[
                 'django.contrib.sessions.middleware.SessionMiddleware',
+                'django.contrib.auth.middleware.AuthenticationMiddleware',
                 'django_nis2_shield.middleware.Nis2GuardMiddleware',
             ],
-            ROOT_URLCONF='',
-            SECRET_KEY='test-secret-key',
-            ALLOWED_HOSTS=['*'],
-            LOGIN_URL='/login/',
+            ROOT_URLCONF=__name__,
             CACHES={
                 'default': {
                     'BACKEND': 'django.core.cache.backends.locmem.LocMemCache',
@@ -45,9 +39,18 @@ def pytest_configure():
                 'ENCRYPTION_KEY': Fernet.generate_key().decode(),
                 'ANONYMIZE_IPS': True,
                 'ENABLE_RATE_LIMIT': True,
-                'ENFORCE_MFA_ROUTES': [],
+                'BLOCK_TOR_EXIT_NODES': True,
+                'ENCRYPT_PII': True,
+                'PII_FIELDS': ['user_id', 'ip', 'email'],
+                'LOG_FORMAT': 'JSON',
             },
+            USE_TZ=True,
         )
+    try:
+        import django
+        django.setup()
+    except Exception:
+        pass
 
 
 @pytest.fixture
@@ -57,9 +60,15 @@ def django_settings():
 
 
 @pytest.fixture
-def encryption_key():
+def nis2_settings(settings):
+    """Fixture to easily override NIS2 settings in tests."""
+    return settings.NIS2_SHIELD
+
+
+@pytest.fixture
+def encryption_key(nis2_settings):
     """Return the test encryption key."""
-    return TEST_ENCRYPTION_KEY
+    return nis2_settings['ENCRYPTION_KEY'].encode()
 
 
 @pytest.fixture

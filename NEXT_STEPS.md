@@ -38,6 +38,42 @@ pip install django-nis2-shield
 
 ---
 
+## 1.5 Configura CI/CD (GitHub Actions)
+
+Automatizza i test e il rilascio per mantenere alta la qualità.
+
+### 1.5.1 Workflow di Test (On Push)
+Crea `.github/workflows/test.yml`:
+```yaml
+name: Run Tests
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
+        django-version: ["3.2", "4.2", "5.0"]
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install Dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install django==${{ matrix.django-version }} pytest
+          pip install .
+      - name: Run Tests
+        run: pytest
+```
+
+### 1.5.2 Workflow di Pubblicazione (On Release)
+Crea `.github/workflows/publish.yml` per pubblicare su PyPI quando crei una release GitHub.
+
+---
+
 ## 2. Pubblica su PyPI
 
 ### 2.1 Crea Account PyPI
@@ -102,6 +138,16 @@ mkdocs new docs
 # Personalizza docs/mkdocs.yml
 mkdocs gh-deploy
 ```
+
+### 3.3 Landing Page (nis2shield.com)
+Crea una semplice landing page per presentare il prodotto.
+1. Usa un template HTML moderno (es. Tailwind UI o HTML5 UP).
+2. Sezioni chiave:
+   - **Hero**: "Compliance NIS2 per Django in 5 minuti".
+   - **Features**: Icone per Logging, Rate Limit, Dashboard.
+   - **CTA**: "Get Started" -> link alla documentazione.
+   - **Trust**: Badge "Open Source", "MIT License".
+3. Hosting su GitHub Pages (gratis) o Vercel/Netlify.
 
 ---
 

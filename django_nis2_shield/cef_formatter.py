@@ -73,7 +73,7 @@ class Nis2CefFormatter(logging.Formatter):
     CEF_VERSION = 0
     DEVICE_VENDOR = 'DjangoNIS2Shield'
     DEVICE_PRODUCT = 'NIS2Shield'
-    DEVICE_VERSION = '0.2.0'
+    DEVICE_VERSION = '0.3.0'
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

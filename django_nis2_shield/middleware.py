@@ -7,6 +7,7 @@ from django.http import HttpResponseForbidden, HttpResponseRedirect
 from django.contrib.auth import logout
 from .utils import get_client_ip, anonymize_ip
 from .enforcer import RateLimiter, SessionGuard, TorBlocker
+from .webhooks import get_webhook_notifier
 
 logger = logging.getLogger('django_nis2_shield')
 
@@ -23,6 +24,9 @@ class Nis2GuardMiddleware:
         
         self.mfa_routes = self.nis2_conf.get('ENFORCE_MFA_ROUTES', [])
         self.mfa_flag = self.nis2_conf.get('MFA_SESSION_FLAG', 'is_verified_mfa')
+        
+        # Initialize Webhook Notifier
+        self.webhook_notifier = get_webhook_notifier()
 
     def __call__(self, request):
         start_time = time.time()
@@ -35,16 +39,34 @@ class Nis2GuardMiddleware:
         # 2. Tor Blocking
         if self.tor_blocker.is_tor_exit_node(client_ip):
             logger.warning(f"NIS2 Blocked Tor Node: {client_ip}")
+            self.webhook_notifier.notify('tor_node_blocked', {
+                'ip': client_ip,
+                'path': request.path,
+                'method': request.method
+            })
             return HttpResponseForbidden("Access Denied (High Risk IP)")
             
         # 3. Rate Limiting
         if not self.rate_limiter.is_allowed(client_ip):
             logger.warning(f"NIS2 Rate Limit Exceeded: {client_ip}")
+            self.webhook_notifier.notify('rate_limit_exceeded', {
+                'ip': client_ip,
+                'path': request.path,
+                'threshold': self.rate_limiter.threshold,
+                'window': self.rate_limiter.window_seconds
+            })
             return HttpResponseForbidden("Too Many Requests", status=429)
             
         # 4. Session Guard (Anti-Hijacking)
         if not self.session_guard.validate(request):
             logger.warning(f"NIS2 Session Hijack Detected: {client_ip} - Invalidating Session")
+            user_info = str(request.user) if hasattr(request, 'user') else 'unknown'
+            self.webhook_notifier.notify('session_hijack_detected', {
+                'ip': client_ip,
+                'user': user_info,
+                'path': request.path,
+                'session_ip': request.session.get('nis2_session_ip', 'unknown')
+            })
             logout(request)
             # Redirect to login or show error
             return HttpResponseRedirect(settings.LOGIN_URL)
@@ -56,6 +78,11 @@ class Nis2GuardMiddleware:
             if any(current_path.startswith(route) for route in self.mfa_routes):
                 if not request.session.get(self.mfa_flag):
                     logger.warning(f"NIS2 MFA Required: {request.user} at {current_path}")
+                    self.webhook_notifier.notify('mfa_required', {
+                        'user': str(request.user),
+                        'path': current_path,
+                        'ip': client_ip
+                    })
                     # Redirect to MFA setup/verify page (configurable)
                     mfa_url = self.nis2_conf.get('MFA_REDIRECT_URL', '/mfa/verify/')
                     return HttpResponseRedirect(f"{mfa_url}?next={current_path}")

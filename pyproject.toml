@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "django-nis2-shield"
-version = "0.2.0"
+version = "0.3.0"
 description = "A Security-First Middleware for Django to ensure NIS2 compliance with forensic logging, active defense, and SIEM integration."
 readme = "README.md"
 requires-python = ">=3.8"

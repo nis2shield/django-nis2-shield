@@ -7,6 +7,31 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2025-12-26
+
+### Added
+- **Multi-SIEM Support**: Extended SIEM integration presets
+  - New `get_qradar_dsm()` for IBM QRadar DSM configuration
+  - New `get_graylog_gelf_config()` for Graylog GELF format
+  - New `get_sumologic_config()` for Sumo Logic with query examples
+  - New `get_datadog_config()` for Datadog log processing
+- **Sliding Window Rate Limiting**: More accurate rate limiting algorithm
+  - New `RATE_LIMIT_ALGORITHM` option: 'sliding_window' (default) or 'fixed_window'
+  - New `RATE_LIMIT_WINDOW` option for configurable window size
+  - New `get_remaining()` method to check remaining requests
+  - Backward compatible with fixed window algorithm
+- **Webhook Notifications**: Real-time security alerting
+  - New `webhooks.py` module with `WebhookNotifier` class
+  - Support for Slack, Microsoft Teams, Discord, and generic HTTP
+  - Async sending by default (non-blocking)
+  - Events: rate_limit_exceeded, session_hijack_detected, tor_node_blocked, mfa_required
+- **Enhanced Exports**: All major classes now exported from package root
+
+### Changed
+- Middleware now sends webhook notifications for all security events
+- Rate limiting logs now include algorithm type and window size
+- Bumped version to 0.3.0
+
 ## [0.2.0] - 2025-12-25
 
 ### Added

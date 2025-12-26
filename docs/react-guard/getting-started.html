@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Getting Started - React NIS2 Guard</title>
+    <meta name="description" content="Quick start guide for React NIS2 Guard.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        pre {
+            background: #0f172a;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            overflow-x: auto;
+        }
+
+        code {
+            font-family: 'Monaco', 'Consolas', monospace;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center border-b border-slate-800">
+        <a href="./" class="flex items-center space-x-2">
+            <svg class="w-6 h-6 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                </path>
+            </svg>
+            <span class="text-lg font-bold">React NIS2 Guard</span>
+        </a>
+        <div class="flex space-x-6 text-sm">
+            <a href="./" class="text-slate-400 hover:text-white transition">Overview</a>
+            <a href="getting-started.html" class="text-blue-400">Getting Started</a>
+            <a href="components.html" class="text-slate-400 hover:text-white transition">Components</a>
+        </div>
+    </nav>
+
+    <!-- Content -->
+    <main class="container mx-auto px-6 py-12 max-w-4xl">
+        <h1 class="text-4xl font-bold mb-8">Getting Started</h1>
+
+        <!-- Installation -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Installation</h2>
+            <pre class="text-slate-300"><code>npm install @nis2shield/react-guard
+# or
+yarn add @nis2shield/react-guard</code></pre>
+        </section>
+
+        <!-- Peer Dependencies -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Requirements</h2>
+            <ul class="list-disc list-inside text-slate-300 space-y-2">
+                <li>React 18.2.0 or higher</li>
+                <li>React DOM 18.2.0 or higher</li>
+            </ul>
+        </section>
+
+        <!-- Basic Setup -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Basic Setup</h2>
+            <p class="text-slate-400 mb-4">Wrap your application with <code
+                    class="text-blue-300 bg-slate-800 px-2 py-0.5 rounded">Nis2Provider</code> to enable security
+                features:</p>
+            <pre class="text-slate-300"><code><span class="text-purple-400">import</span> {
+  Nis2Provider,
+  SessionWatchdog,
+  AuditBoundary
+} <span class="text-purple-400">from</span> <span class="text-green-400">'@nis2shield/react-guard'</span>;
+
+<span class="text-purple-400">function</span> <span class="text-blue-400">App</span>() {
+  <span class="text-purple-400">return</span> (
+    &lt;Nis2Provider
+      config={{
+        auditEndpoint: <span class="text-green-400">'/api/nis2/telemetry/'</span>,
+        idleTimeoutMinutes: <span class="text-yellow-300">15</span>,
+        debug: process.env.NODE_ENV === <span class="text-green-400">'development'</span>
+      }}
+    &gt;
+      &lt;AuditBoundary fallback={&lt;ErrorPage /&gt;}&gt;
+        &lt;SessionWatchdog
+          onIdle={() =&gt; window.location.href = <span class="text-green-400">'/logout'</span>}
+        /&gt;
+        &lt;YourApp /&gt;
+      &lt;/AuditBoundary&gt;
+    &lt;/Nis2Provider&gt;
+  );
+}</code></pre>
+        </section>
+
+        <!-- Configuration -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Configuration Options</h2>
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-slate-300">
+                    <thead class="text-slate-400 border-b border-slate-700">
+                        <tr>
+                            <th class="py-3 pr-4">Option</th>
+                            <th class="py-3 pr-4">Type</th>
+                            <th class="py-3 pr-4">Default</th>
+                            <th class="py-3">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-slate-800">
+                        <tr>
+                            <td class="py-3 pr-4 font-mono text-sm text-blue-300">auditEndpoint</td>
+                            <td class="py-3 pr-4">string</td>
+                            <td class="py-3 pr-4 text-slate-500">required</td>
+                            <td class="py-3">URL to send telemetry reports</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-mono text-sm text-blue-300">idleTimeoutMinutes</td>
+                            <td class="py-3 pr-4">number</td>
+                            <td class="py-3 pr-4 text-slate-500">15</td>
+                            <td class="py-3">Minutes before idle timeout</td>
+                        </tr>
+                        <tr>
+                            <td class="py-3 pr-4 font-mono text-sm text-blue-300">debug</td>
+                            <td class="py-3 pr-4">boolean</td>
+                            <td class="py-3 pr-4 text-slate-500">false</td>
+                            <td class="py-3">Enable console logging</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="mb-12">
+            <h2 class="text-2xl font-bold mb-4 text-blue-400">Next Steps</h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                <a href="components.html"
+                    class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition">
+                    <h3 class="font-bold mb-1">Components & Hooks →</h3>
+                    <p class="text-slate-400 text-sm">Learn about all available components</p>
+                </a>
+                <a href="https://github.com/nis2shield/react-guard"
+                    class="bg-slate-800 p-4 rounded-lg border border-slate-700 hover:border-blue-500 transition">
+                    <h3 class="font-bold mb-1">View on GitHub →</h3>
+                    <p class="text-slate-400 text-sm">Source code and examples</p>
+                </a>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
+        <a href="../" class="hover:text-white transition">← Back to NIS2 Shield Hub</a>
+    </footer>
+
+</body>
+
+</html>

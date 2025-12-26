@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>React NIS2 Guard - Client-Side Security for React</title>
+    <meta name="description"
+        content="Client-side security telemetry and session protection for React. Part of the NIS2 Shield ecosystem.">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .gradient-text {
+            background: linear-gradient(to right, #3b82f6, #8b5cf6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+
+<body class="bg-slate-900 text-white">
+
+    <!-- Navbar -->
+    <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center space-x-2">
+            <a href="../" class="flex items-center space-x-2">
+                <svg class="w-8 h-8 text-blue-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z">
+                    </path>
+                </svg>
+                <span class="text-xl font-bold">React NIS2 Guard</span>
+            </a>
+        </div>
+        <div class="hidden md:flex space-x-8">
+            <a href="getting-started.html" class="hover:text-blue-400 transition">Getting Started</a>
+            <a href="components.html" class="hover:text-blue-400 transition">Components</a>
+            <a href="https://github.com/nis2shield/react-guard" class="hover:text-blue-400 transition">GitHub</a>
+        </div>
+        <a href="https://www.npmjs.com/package/@nis2shield/react-guard"
+            class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-full font-semibold transition">
+            Install v0.2.0
+        </a>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="container mx-auto px-6 py-20 text-center">
+        <div
+            class="inline-block px-3 py-1 mb-4 text-sm font-semibold text-blue-300 bg-blue-900/30 rounded-full border border-blue-700">
+            v0.2.0 - Device Fingerprinting 🎉
+        </div>
+        <h1 class="text-5xl md:text-7xl font-bold mb-6 leading-tight">
+            Client-Side Security <br>
+            <span class="gradient-text">for React</span>
+        </h1>
+        <p class="text-xl text-slate-400 mb-10 max-w-2xl mx-auto">
+            Session watchdog, encrypted storage, device fingerprinting, and telemetry.
+            Protect your frontend and report to your SIEM.
+        </p>
+        <div class="flex flex-col md:flex-row justify-center gap-4">
+            <a href="getting-started.html"
+                class="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-lg font-bold text-lg transition">
+                Get Started
+            </a>
+            <div
+                class="bg-slate-800 border border-slate-700 text-slate-300 px-8 py-4 rounded-lg font-mono text-lg flex items-center gap-3">
+                <span class="text-blue-400">$</span> npm i @nis2shield/react-guard
+            </div>
+        </div>
+    </header>
+
+    <!-- Features Grid -->
+    <section class="container mx-auto px-6 py-20 border-t border-slate-800">
+        <h2 class="text-3xl font-bold text-center mb-16">Everything you need for client-side security</h2>
+        <div class="grid md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-blue-500 transition">
+                <div class="w-12 h-12 bg-blue-900/50 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Session Watchdog</h3>
+                <p class="text-slate-400">Detect user inactivity and tab napping. Auto-logout on idle with
+                    configurable timeouts.</p>
+            </div>
+            <!-- Feature 2 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-blue-500 transition">
+                <div class="w-12 h-12 bg-purple-900/50 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Secure Storage</h3>
+                <p class="text-slate-400">AES-GCM encrypted localStorage and sessionStorage. Ephemeral keys for
+                    automatic data clearing.</p>
+            </div>
+            <!-- Feature 3 -->
+            <div class="bg-slate-800/50 p-8 rounded-2xl border border-slate-700 hover:border-blue-500 transition">
+                <div class="w-12 h-12 bg-green-900/50 rounded-lg flex items-center justify-center mb-6">
+                    <svg class="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2zM9 9h6v6H9V9z">
+                        </path>
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold mb-3">Device Fingerprint</h3>
+                <p class="text-slate-400">Canvas hash, WebGL detection, and hardware info. Detect session hijacking
+                    with fingerprint comparison.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quick Example -->
+    <section class="container mx-auto px-6 py-16 border-t border-slate-800">
+        <h2 class="text-3xl font-bold text-center mb-12">Quick Start</h2>
+        <div class="max-w-3xl mx-auto bg-slate-950 rounded-2xl border border-slate-800 overflow-hidden">
+            <div class="flex items-center px-6 py-4 border-b border-slate-800 bg-slate-900">
+                <div class="flex space-x-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500"></div>
+                </div>
+                <div class="ml-4 text-sm text-slate-400 font-mono">App.tsx</div>
+            </div>
+            <div class="p-6 overflow-x-auto">
+                <pre class="font-mono text-sm leading-relaxed text-slate-300"><span class="text-purple-400">import</span> { Nis2Provider, SessionWatchdog, AuditBoundary } <span class="text-purple-400">from</span> <span class="text-green-400">'@nis2shield/react-guard'</span>;
+
+<span class="text-purple-400">function</span> <span class="text-blue-400">App</span>() {
+  <span class="text-purple-400">return</span> (
+    <span class="text-slate-500">&lt;</span><span class="text-blue-400">Nis2Provider</span> <span class="text-yellow-300">config</span>=&#123;&#123;
+      <span class="text-green-400">auditEndpoint</span>: <span class="text-yellow-300">'/api/nis2/telemetry/'</span>,
+      <span class="text-green-400">idleTimeoutMinutes</span>: <span class="text-blue-400">15</span>,
+    &#125;&#125;<span class="text-slate-500">&gt;</span>
+      <span class="text-slate-500">&lt;</span><span class="text-blue-400">AuditBoundary</span><span class="text-slate-500">&gt;</span>
+        <span class="text-slate-500">&lt;</span><span class="text-blue-400">SessionWatchdog</span> <span class="text-yellow-300">onIdle</span>=&#123;() => logout()&#125; <span class="text-slate-500">/&gt;</span>
+        <span class="text-slate-500">&lt;</span><span class="text-purple-400">YourApp</span> <span class="text-slate-500">/&gt;</span>
+      <span class="text-slate-500">&lt;/</span><span class="text-blue-400">AuditBoundary</span><span class="text-slate-500">&gt;</span>
+    <span class="text-slate-500">&lt;/</span><span class="text-blue-400">Nis2Provider</span><span class="text-slate-500">&gt;</span>
+  );
+}</pre>
+            </div>
+        </div>
+    </section>
+
+    <!-- Documentation Links -->
+    <section class="container mx-auto px-6 py-16 border-t border-slate-800">
+        <h2 class="text-3xl font-bold text-center mb-12">Documentation</h2>
+        <div class="grid md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            <a href="getting-started.html"
+                class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition text-center">
+                <h3 class="text-lg font-bold mb-2">Getting Started</h3>
+                <p class="text-slate-400 text-sm">Install and configure in minutes</p>
+            </a>
+            <a href="components.html"
+                class="bg-slate-800 p-6 rounded-xl border border-slate-700 hover:border-blue-500 transition text-center">
+                <h3 class="text-lg font-bold mb-2">Components & Hooks</h3>
+                <p class="text-slate-400 text-sm">All available APIs explained</p>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-slate-800 py-12 text-center text-slate-500">
+        <p class="mb-4">© 2025 NIS2 Shield Contributors. MIT License.</p>
+        <div class="flex justify-center space-x-6">
+            <a href="../" class="hover:text-white transition">← Back to Hub</a>
+            <a href="https://github.com/nis2shield/react-guard" class="hover:text-white transition">GitHub</a>
+            <a href="https://www.npmjs.com/package/@nis2shield/react-guard" class="hover:text-white transition">npm</a>
+        </div>
+    </footer>
+
+</body>
+
+</html>

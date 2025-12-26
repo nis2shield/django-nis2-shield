@@ -5,40 +5,44 @@
 [![Django](https://img.shields.io/badge/django-3.2%20%7C%204.x%20%7C%205.x-blue.svg)](https://www.djangoproject.com/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**Il Middleware "Security-First" per la conformità NIS2.**
+**The "Security-First" Middleware for NIS2 Compliance.**
 
-`django-nis2-shield` è una libreria plug-and-play progettata per aiutare le applicazioni Django a soddisfare i requisiti tecnici della Direttiva NIS2 (Network and Information Security 2), con un focus su Logging Forense, Active Defense e SIEM Integration.
+`django-nis2-shield` is a plug-and-play library designed to help Django applications meet the technical requirements of the NIS2 Directive (Network and Information Security 2), with a focus on Forensic Logging, Active Defense, and SIEM Integration.
 
-## ✨ Caratteristiche Principali
+## ✨ Key Features
 
 ### 🔒 Forensic Logger
-- Log strutturati (JSON o CEF) firmati con HMAC-SHA256
-- Cifratura automatica dei campi PII (GDPR compliant)
-- IP Anonymization configurabile
+- Structured logs (JSON or CEF) signed with HMAC-SHA256
+- Automatic PII field encryption (GDPR compliant)
+- Configurable IP anonymization
 
 ### 🛡️ Active Defense
-- **Rate Limiting**: Protezione contro attacchi DoS applicativi
-- **Session Guard**: Prevenzione Session Hijacking con tolleranza mobile
-- **Tor Blocker**: Blocco automatico dei nodi di uscita Tor
-- **MFA Gatekeeper**: Reindirizzamento 2FA per path sensibili
+- **Rate Limiting**: Protection against application-level DoS attacks (sliding window algorithm)
+- **Session Guard**: Session hijacking prevention with mobile network tolerance
+- **Tor Blocker**: Automatic blocking of Tor exit nodes
+- **MFA Gatekeeper**: 2FA redirect for sensitive paths
 
 ### 📊 Compliance & Reporting
-- Comando `check_nis2` per audit della configurazione
-- Generazione report incidenti per CSIRT (deadline 24h)
-- Preset SIEM per Elasticsearch, Splunk, e altri
+- `check_nis2` command for configuration auditing
+- Incident report generation for CSIRT (24h deadline)
+- SIEM presets for Elasticsearch, Splunk, QRadar, Graylog, Sumo Logic, and Datadog
 
-## 📦 Installazione
+### 🔔 Real-time Alerting (v0.3.0+)
+- Webhook notifications for security events
+- Supports Slack, Microsoft Teams, Discord, and generic HTTP
+
+## 📦 Installation
 
 ```bash
 pip install django-nis2-shield
 ```
 
-Per lo sviluppo:
+For development:
 ```bash
 pip install django-nis2-shield[dev]
 ```
 
-## ⚙️ Configurazione
+## ⚙️ Configuration
 
 ### settings.py
 
@@ -50,12 +54,12 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     ...,
-    # Inserire dopo SessionMiddleware e prima di CommonMiddleware
+    # Add after SessionMiddleware and before CommonMiddleware
     'django_nis2_shield.middleware.Nis2GuardMiddleware', 
     ...,
 ]
 
-# Configurazione NIS2
+# NIS2 Shield Configuration
 NIS2_SHIELD = {
     # Security Keys
     'INTEGRITY_KEY': 'change-me-to-a-secure-secret',
@@ -68,7 +72,9 @@ NIS2_SHIELD = {
     
     # Active Defense
     'ENABLE_RATE_LIMIT': True,
-    'RATE_LIMIT_THRESHOLD': 100,  # requests/minute
+    'RATE_LIMIT_THRESHOLD': 100,  # requests per window
+    'RATE_LIMIT_WINDOW': 60,  # seconds
+    'RATE_LIMIT_ALGORITHM': 'sliding_window',  # or 'fixed_window'
     'ENABLE_SESSION_GUARD': True,
     'SESSION_IP_TOLERANCE': 'subnet',  # 'exact', 'subnet', 'none'
     'BLOCK_TOR_EXIT_NODES': True,
@@ -77,12 +83,18 @@ NIS2_SHIELD = {
     'ENFORCE_MFA_ROUTES': ['/admin/', '/finance/'],
     'MFA_SESSION_FLAG': 'is_verified_mfa',
     'MFA_REDIRECT_URL': '/accounts/login/mfa/',
+    
+    # Webhooks (v0.3.0+)
+    'ENABLE_WEBHOOKS': True,
+    'WEBHOOKS': [
+        {'url': 'https://hooks.slack.com/...', 'format': 'slack'},
+    ]
 }
 ```
 
-### Formato Log: CEF (Enterprise SIEM)
+### Log Format: CEF (Enterprise SIEM)
 
-Per output in formato CEF invece di JSON:
+For CEF output instead of JSON:
 
 ```python
 from django_nis2_shield.cef_formatter import get_cef_logging_config
@@ -90,54 +102,54 @@ from django_nis2_shield.cef_formatter import get_cef_logging_config
 LOGGING = get_cef_logging_config('/var/log/django_nis2.cef')
 ```
 
-## 🚀 Utilizzo
+## 🚀 Usage
 
-### Audit della Configurazione
+### Configuration Audit
 ```bash
 python manage.py check_nis2
 ```
 
-### Aggiornamento Threat Intelligence
+### Threat Intelligence Update
 ```bash
 python manage.py update_threat_list
 ```
 
-### Generazione Report Incidenti
+### Incident Report Generation
 ```bash
 python manage.py generate_incident_report --hours=24 --output=incident.json
 ```
 
 ## 📈 Dashboard Monitoring
 
-Il progetto include uno stack Docker per visualizzare i log:
+The project includes a Docker stack for log visualization:
 
 ```bash
 cd dashboard
 docker compose up -d
 
-# Accesso:
+# Access:
 # - Kibana: http://localhost:5601
 # - Grafana: http://localhost:3000 (admin/admin)
 ```
 
-Vedi [dashboard/README.md](dashboard/README.md) per dettagli.
+See [dashboard/README.md](dashboard/README.md) for details.
 
 ## 🧪 Testing
 
 ```bash
-# Con gli script esistenti
-PYTHONPATH=. python tests/test_basic.py
-
-# Con pytest
+# With pytest
 pip install pytest pytest-django
 PYTHONPATH=. pytest tests/ -v
 ```
 
-## 📄 Licenza
+## 📄 License
 
-MIT License - vedi [LICENSE](LICENSE) per dettagli.
+MIT License - see [LICENSE](LICENSE) for details.
 
 ## 🤝 Contributing
 
-Le contribuzioni sono benvenute! Apri una issue o una PR su GitHub.
+Contributions are welcome! Open an issue or PR on GitHub.
 
+---
+
+**[Documentation](https://nis2shield.com)** · **[PyPI](https://pypi.org/project/django-nis2-shield/)** · **[Changelog](CHANGELOG.md)**

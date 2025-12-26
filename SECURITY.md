@@ -4,8 +4,9 @@
 
 | Version | Supported |
 |---------|-----------|
+| 0.3.x   | ✅ Yes    |
 | 0.2.x   | ✅ Yes    |
-| 0.1.x   | ⚠️ Critical bugs only |
+| 0.1.x   | ❌ No     |
 | < 0.1   | ❌ No     |
 
 ## Reporting a Vulnerability

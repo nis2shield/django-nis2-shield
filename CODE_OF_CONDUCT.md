@@ -1,31 +1,31 @@
-# Codice di Condotta - Contributor Covenant
+# Contributor Covenant Code of Conduct
 
-## Il Nostro Impegno
+## Our Pledge
 
-Noi, come membri, contributori e leader, ci impegniamo a rendere la partecipazione alla nostra community un'esperienza libera da molestie per tutti, indipendentemente da età, corporatura, disabilità visibile o invisibile, etnia, caratteristiche sessuali, identità ed espressione di genere, livello di esperienza, istruzione, stato socio-economico, nazionalità, aspetto personale, razza, religione o identità e orientamento sessuale.
+We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-## I Nostri Standard
+## Our Standards
 
-Esempi di comportamento che contribuisce a creare un ambiente positivo:
+Examples of behavior that contributes to a positive environment:
 
-* Usare un linguaggio accogliente e inclusivo
-* Rispettare punti di vista ed esperienze differenti
-* Accettare con garbo le critiche costruttive
-* Concentrarsi su ciò che è meglio per la community
-* Mostrare empatia verso gli altri membri
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
 
-Esempi di comportamento inaccettabile:
+Examples of unacceptable behavior:
 
-* Uso di linguaggio o immagini sessualizzate
-* Trolling, commenti offensivi e attacchi personali o politici
-* Molestie pubbliche o private
-* Pubblicare informazioni private altrui senza permesso
-* Altri comportamenti che potrebbero essere considerati inappropriati
+* The use of sexualized language or imagery
+* Trolling, insulting or derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information without explicit permission
+* Other conduct which could reasonably be considered inappropriate
 
-## Applicazione
+## Enforcement
 
-I maintainer del progetto sono responsabili di chiarire gli standard di comportamento accettabile e prenderanno azioni correttive appropriate in risposta a qualsiasi comportamento inaccettabile.
+Project maintainers are responsible for clarifying the standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate.
 
-## Attribuzione
+## Attribution
 
-Questo Codice di Condotta è adattato dal [Contributor Covenant](https://www.contributor-covenant.org), versione 2.1.
+This Code of Conduct is adapted from the [Contributor Covenant](https://www.contributor-covenant.org), version 2.1.

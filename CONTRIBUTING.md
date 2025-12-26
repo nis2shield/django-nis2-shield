@@ -1,35 +1,35 @@
 # Contributing to Django NIS2 Shield
 
-Grazie per il tuo interesse nel contribuire a Django NIS2 Shield! 🛡️
+Thank you for your interest in contributing to Django NIS2 Shield! 🛡️
 
-Questo progetto è open source e accoglie contributi dalla community. Che tu sia uno sviluppatore Django, un esperto di sicurezza, o semplicemente un utente con feedback, il tuo contributo è prezioso.
+This project is open source and welcomes contributions from the community. Whether you're a Django developer, a security expert, or simply a user with feedback, your contribution is valuable.
 
-## Come Contribuire
+## How to Contribute
 
-### 🐛 Segnalare Bug
+### 🐛 Reporting Bugs
 
-1. Controlla se il bug è già stato segnalato nelle [Issues](../../issues)
-2. Se non esiste, apri una nuova issue usando il template "Bug Report"
-3. Includi: versione Python, versione Django, passi per riprodurre
+1. Check if the bug has already been reported in [Issues](../../issues)
+2. If not, open a new issue using the "Bug Report" template
+3. Include: Python version, Django version, steps to reproduce
 
-### 💡 Proporre Nuove Funzionalità
+### 💡 Proposing New Features
 
-1. Apri una issue con il template "Feature Request"
-2. Descrivi il caso d'uso e il valore per la conformità NIS2
-3. Aspetta feedback prima di iniziare l'implementazione
+1. Open an issue with the "Feature Request" template
+2. Describe the use case and value for NIS2 compliance
+3. Wait for feedback before starting implementation
 
-### 🔧 Inviare Pull Request
+### 🔧 Submitting Pull Requests
 
-1. **Fork** il repository
-2. Crea un branch: `git checkout -b feature/nome-feature`
-3. Scrivi test per le nuove funzionalità
-4. Assicurati che tutti i test passino:
+1. **Fork** the repository
+2. Create a branch: `git checkout -b feature/feature-name`
+3. Write tests for new features (we have 41+ tests)
+4. Make sure all tests pass:
    ```bash
    PYTHONPATH=. pytest tests/ -v
    ```
-5. Apri una Pull Request con una descrizione chiara
+5. Open a Pull Request with a clear description
 
-## Setup Ambiente di Sviluppo
+## Development Environment Setup
 
 ```bash
 # Clone
@@ -39,33 +39,33 @@ cd django-nis2-shield
 # Virtual environment
 python -m venv venv
 source venv/bin/activate  # Linux/Mac
-# oppure: venv\Scripts\activate  # Windows
+# or: venv\Scripts\activate  # Windows
 
-# Installa dipendenze dev
+# Install dev dependencies
 pip install -e ".[dev]"
 
-# Esegui i test
+# Run tests
 PYTHONPATH=. pytest tests/ -v
 ```
 
-## Stile del Codice
+## Code Style
 
-- Usa **Black** per la formattazione: `black django_nis2_shield/`
-- Usa **isort** per gli import: `isort django_nis2_shield/`
-- Segui PEP 8
+- Use **Black** for formatting: `black django_nis2_shield/`
+- Use **isort** for imports: `isort django_nis2_shield/`
+- Follow PEP 8
 
-## Aree Dove Servono Contributi
+## Areas Where Contributions Are Needed
 
-| Area | Competenze Richieste | Priorità |
-|------|---------------------|----------|
-| Review sicurezza codice | Cybersecurity | 🔴 Alta |
-| Nuovi preset SIEM | Splunk, QRadar, Graylog | 🟡 Media |
-| Test di penetrazione | Pentesting | 🔴 Alta |
-| Documentazione | Italiano/Inglese | 🟢 Bassa |
-| Compliance check | NIS2, GDPR | 🔴 Alta |
+| Area | Required Skills | Priority |
+|------|-----------------|----------|
+| Code security review | Cybersecurity | 🔴 High |
+| New SIEM presets | Splunk, QRadar, Graylog | 🟡 Medium |
+| Penetration testing | Pentesting | 🔴 High |
+| Documentation | English | 🟢 Low |
+| Compliance checks | NIS2, GDPR | 🔴 High |
 
-## Domande?
+## Questions?
 
-Apri una issue con il tag `question` o contatta i maintainer.
+Open an issue with the `question` tag or contact the maintainers.
 
-Grazie! 🙏
+Thank you! 🙏

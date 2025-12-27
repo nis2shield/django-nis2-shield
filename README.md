@@ -9,6 +9,8 @@
 
 `django-nis2-shield` is a plug-and-play library designed to help Django applications meet the technical requirements of the NIS2 Directive (Network and Information Security 2), with a focus on Forensic Logging, Active Defense, and SIEM Integration.
 
+> **Part of the NIS2 Shield Ecosystem**: Use with [infrastructure](https://github.com/nis2shield/infrastructure) for **Demonstrable Compliance** (audited via `tfsec`) and [@nis2shield/react-guard](https://github.com/nis2shield/react-guard) for client-side protection.
+
 ## ✨ Key Features
 
 ### 🔒 Forensic Logger

@@ -3,6 +3,8 @@
 [![PyPI version](https://badge.fury.io/py/django-nis2-shield.svg)](https://badge.fury.io/py/django-nis2-shield)
 [![Python](https://img.shields.io/pypi/pyversions/django-nis2-shield.svg)](https://pypi.org/project/django-nis2-shield/)
 [![Django](https://img.shields.io/badge/django-3.2%20%7C%204.x%20%7C%205.x-blue.svg)](https://www.djangoproject.com/)
+[![Safety: Passing](https://pyup.io/repos/github/nis2shield/django-nis2-shield/shield.svg)](https://pyup.io/repos/github/nis2shield/django-nis2-shield/)
+[![PiWheels](https://img.shields.io/badge/piwheels-available-orange.svg)](https://piwheels.org/project/django-nis2-shield/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 **The "Security-First" Middleware for NIS2 Compliance.**

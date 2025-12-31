@@ -12,6 +12,32 @@ from .webhooks import get_webhook_notifier
 logger = logging.getLogger('django_nis2_shield')
 
 class Nis2GuardMiddleware:
+    """
+    NIS2 compliance middleware for Django providing forensic logging, 
+    rate limiting, session protection, and MFA enforcement.
+    
+    Intercepts every request, applies active defense measures, and logs
+    structured JSON with HMAC-SHA256 integrity signatures.
+    
+    Examples:
+        Basic setup in settings.py:
+        
+        MIDDLEWARE = [
+            'django.middleware.security.SecurityMiddleware',
+            'django.contrib.sessions.middleware.SessionMiddleware',
+            'django_nis2_shield.middleware.Nis2GuardMiddleware',  # Add here
+            'django.middleware.common.CommonMiddleware',
+            ...
+        ]
+        
+        NIS2_SHIELD = {
+            'INTEGRITY_KEY': 'your-secret-hmac-key',
+            'ENCRYPTION_KEY': Fernet.generate_key(),
+            'ANONYMIZE_IPS': True,
+            'ENABLE_RATE_LIMIT': True,
+            'RATE_LIMIT_THRESHOLD': 100,
+        }
+    """
     def __init__(self, get_response):
         self.get_response = get_response
         self.nis2_conf = getattr(settings, 'NIS2_SHIELD', {})

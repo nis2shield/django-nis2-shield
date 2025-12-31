@@ -22,7 +22,11 @@ keywords = [
     "middleware",
     "gdpr",
     "audit",
-    "forensic"
+    "forensic",
+    "cybersecurity",
+    "enterprise",
+    "rate-limiting",
+    "session-guard"
 ]
 classifiers = [
     "Development Status :: 4 - Beta",

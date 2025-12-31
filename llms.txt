@@ -1,0 +1,39 @@
+# django-nis2-shield - AI Context
+
+## What is this library?
+A Django middleware for NIS2 Directive compliance.
+Provides forensic logging, rate limiting, session protection, and SIEM integration.
+
+## Core Components
+- `Nis2GuardMiddleware` - Main middleware, add to MIDDLEWARE list
+- `RateLimiter` - Sliding window rate limiting
+- `SessionGuard` - Session hijacking detection
+- `TorBlocker` - Block Tor exit nodes
+
+## Configuration (settings.py)
+```python
+NIS2_SHIELD = {
+    'INTEGRITY_KEY': 'hmac-secret',      # Required for log signing
+    'ENCRYPTION_KEY': Fernet.generate_key(),  # For PII encryption
+    'ANONYMIZE_IPS': True,
+    'ENABLE_RATE_LIMIT': True,
+    'RATE_LIMIT_THRESHOLD': 100,
+    'RATE_LIMIT_WINDOW': 60,
+    'BLOCK_TOR_EXIT_NODES': True,
+    'ENFORCE_MFA_ROUTES': ['/admin/', '/finance/'],
+}
+```
+
+## Management Commands
+- `python manage.py check_nis2` - Audit configuration
+- `python manage.py update_threat_list` - Update Tor blocklist
+- `python manage.py generate_incident_report` - CSIRT report
+
+## SIEM Presets
+Elasticsearch, Splunk, QRadar, Graylog, Sumo Logic, Datadog
+
+## NIS2 Articles Addressed
+- Art. 21.2.a: Risk analysis (session hijacking prevention)
+- Art. 21.2.e: Rate limiting, DoS protection
+- Art. 21.2.h: Integrity signing, audit logs
+- Art. 21.2.j: MFA enforcement

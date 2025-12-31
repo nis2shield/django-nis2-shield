@@ -9,7 +9,17 @@
 
 **The "Security-First" Middleware for NIS2 Compliance.**
 
-`django-nis2-shield` is a plug-and-play library designed to help Django applications meet the technical requirements of the NIS2 Directive (Network and Information Security 2), with a focus on Forensic Logging, Active Defense, and SIEM Integration.
+## Why this package?
+
+Companies subject to NIS2 Directive need demonstrable compliance with strict logging and monitoring requirements. This middleware provides:
+
+1. **Forensic logging** with HMAC-SHA256 integrity and PII encryption (Art. 21.2.h)
+2. **Rate limiting** to prevent DoS/Brute Force attacks (Art. 21.2.e)
+3. **Session Guard** to detect hijacking attempts (Art. 21.2.a)
+4. **MFA Gatekeeper** for sensitive routes (Art. 21.2.j)
+5. **SIEM integration** with presets for Elasticsearch, Splunk, QRadar, Datadog
+
+`django-nis2-shield` is a plug-and-play library designed to help Django applications meet the technical requirements of the NIS2 Directive.
 
 > **Part of the NIS2 Shield Ecosystem**: Use with [infrastructure](https://github.com/nis2shield/infrastructure) for **Demonstrable Compliance** (audited via `tfsec`) and [@nis2shield/react-guard](https://github.com/nis2shield/react-guard) for client-side protection.
 
@@ -144,6 +154,64 @@ See [dashboard/README.md](dashboard/README.md) for details.
 # With pytest
 pip install pytest pytest-django
 PYTHONPATH=. pytest tests/ -v
+```
+
+## 📖 Recipes
+
+### Banking App with MFA & Rate Limiting
+
+```python
+# settings.py
+NIS2_SHIELD = {
+    'INTEGRITY_KEY': os.environ['NIS2_HMAC_KEY'],
+    'ENCRYPTION_KEY': os.environ['NIS2_AES_KEY'],
+    
+    # Rate Limit: 50 requests per minute
+    'ENABLE_RATE_LIMIT': True,
+    'RATE_LIMIT_THRESHOLD': 50,
+    'RATE_LIMIT_WINDOW': 60,
+    
+    # MFA for admin and finance
+    'ENFORCE_MFA_ROUTES': ['/admin/', '/finance/', '/transfers/'],
+    'MFA_REDIRECT_URL': '/accounts/mfa/verify/',
+}
+```
+
+### E-commerce with Splunk SIEM
+
+```python
+# settings.py
+import os
+
+NIS2_SHIELD = {
+    'INTEGRITY_KEY': os.environ['NIS2_HMAC_KEY'],
+    'ANONYMIZE_IPS': True,
+    'ENCRYPT_PII': True,
+    
+    # Webhooks for real-time alerts
+    'ENABLE_WEBHOOKS': True,
+    'WEBHOOKS': [
+        {'url': 'https://hooks.slack.com/...', 'format': 'slack'},
+    ]
+}
+
+# Splunk SIEM Output
+from django_nis2_shield.siem import get_splunk_logging_config
+LOGGING = get_splunk_logging_config(
+    splunk_url='https://splunk.example.com:8088',
+    token=os.environ['SPLUNK_HEC_TOKEN']
+)
+```
+
+### Healthcare API with Session Guard
+
+```python
+# Block session hijacking attempts with IP tolerance for mobile networks
+NIS2_SHIELD = {
+    'ENABLE_SESSION_GUARD': True,
+    'SESSION_IP_TOLERANCE': 'subnet',  # 'exact', 'subnet', or 'none'
+    'BLOCK_TOR_EXIT_NODES': True,
+}
 ```
 
 ## 📄 License

@@ -1,17 +1,18 @@
 # 🚀 Next Steps - Django NIS2 Shield
 
-Guida dettagliata per i prossimi passi dopo la pubblicazione iniziale.
+Detailed guide for the next steps after the initial release.
 
 ---
 
-## 1. Configura GitHub Repository
+## 1. Configure GitHub Repository
 
-### 1.1 Aggiungi Descrizione e Topics ✅ COMPLETATO
-> **Stato**: Topics aggiunti (python, security, django, nis2, compliance, gdpr, logging, forensic, middleware).
+### 1.1 Add Description and Topics ✅ COMPLETED
+> **Status**: Topics added (python, security, django, nis2, compliance, gdpr, logging, forensic, middleware).
 
-### 1.2 Crea la Prima Release ✅ COMPLETATO\n> **Stato**: Release v0.2.0 pubblicata il 25 Dicembre 2025. Ha triggerato automaticamente il publish su PyPI.
-1. Vai su **Releases** → **Create a new release**
-2. **Tag**: `v0.2.0` (crea nuovo tag)
+### 1.2 Create First Release ✅ COMPLETED
+> **Status**: Release v0.2.0 published on December 25, 2025. Automatically triggered PyPI publish.
+1. Go to **Releases** → **Create a new release**
+2. **Tag**: `v0.2.0` (create new tag)
 3. **Title**: `v0.2.0 - Initial Public Release`
 4. **Description**:
 ```markdown
@@ -30,16 +31,16 @@ Guida dettagliata per i prossimi passi dopo la pubblicazione iniziale.
 pip install django-nis2-shield
 \`\`\`
 ```
-5. Clicca **Publish release**
+5. Click **Publish release**
 
 ---
 
-## 1.5 Configura CI/CD (GitHub Actions) ✅ COMPLETATO
+## 1.5 Configure CI/CD (GitHub Actions) ✅ COMPLETED
 
-> **Stato**: Workflow `test.yml` e `publish.yml` già configurati e funzionanti.
+> **Status**: `test.yml` and `publish.yml` workflows already configured and working.
 
-### 1.5.1 Workflow di Test (On Push)
-Crea `.github/workflows/test.yml`:
+### 1.5.1 Test Workflow (On Push)
+Create `.github/workflows/test.yml`:
 ```yaml
 name: Run Tests
 on: [push, pull_request]
@@ -65,26 +66,26 @@ jobs:
         run: pytest
 ```
 
-### 1.5.2 Workflow di Pubblicazione (On Release)
-Crea `.github/workflows/publish.yml` per pubblicare su PyPI quando crei una release GitHub.
+### 1.5.2 Publish Workflow (On Release)
+Create `.github/workflows/publish.yml` to publish to PyPI when creating a GitHub release.
 
 ---
 
-## 2. Pubblica su PyPI ✅ COMPLETATO
+## 2. Publish on PyPI ✅ COMPLETED
 
-> **Stato**: `django-nis2-shield` v0.2.0 pubblicato su PyPI il 25 Dicembre 2025 tramite GitHub Actions trusted publishing.
+> **Status**: `django-nis2-shield` v0.2.0 published on PyPI on December 25, 2025 via GitHub Actions trusted publishing.
 
-### 2.1 Crea Account PyPI
-1. Registrati su https://pypi.org/account/register/
-2. Vai su **Account settings** → **API tokens**
-3. Crea un token con scope "Entire account" (per il primo upload)
-4. Salva il token in modo sicuro
+### 2.1 Create PyPI Account
+1. Register at https://pypi.org/account/register/
+2. Go to **Account settings** → **API tokens**
+3. Create a token with scope "Entire account" (for the first upload)
+4. Save the token securely
 
-### 2.2 Configura Twine
+### 2.2 Configure Twine
 ```bash
 pip install twine build
 
-# Crea il file ~/.pypirc
+# Create ~/.pypirc file
 cat > ~/.pypirc << EOF
 [pypi]
 username = __token__
@@ -94,24 +95,24 @@ EOF
 chmod 600 ~/.pypirc
 ```
 
-### 2.3 Build e Upload
+### 2.3 Build and Upload
 ```bash
 cd /Users/dipriamo.fabrizio/Desktop/nis2_middleware
 
-# Pulisci build precedenti
+# Clean previous builds
 rm -rf dist/ build/ *.egg-info/
 
 # Build
 python -m build
 
-# Upload su Test PyPI (opzionale, per testare)
+# Upload to Test PyPI (optional, for testing)
 twine upload --repository testpypi dist/*
 
-# Upload su PyPI reale
+# Upload to real PyPI
 twine upload dist/*
 ```
 
-### 2.4 Verifica
+### 2.4 Verify
 ```bash
 pip install django-nis2-shield
 python -c "import django_nis2_shield; print('OK!')"
@@ -119,138 +120,138 @@ python -c "import django_nis2_shield; print('OK!')"
 
 ---
 
-## 3. Configura Sito Web ✅ COMPLETATO
+## 3. Configure Website ✅ COMPLETED
 
-> **Stato**: nis2shield.com è LIVE! DNS configurato, GitHub Pages attivo, HTTPS funzionante.
+> **Status**: nis2shield.com is LIVE! DNS configured, GitHub Pages active, HTTPS working.
 
-### 3.1 GitHub Pages ✅ COMPLETATO
-> DNS punta a GitHub Pages (185.199.x.153), sito servito dalla cartella `docs/`.
+### 3.1 GitHub Pages ✅ COMPLETED
+> DNS points to GitHub Pages (185.199.x.153), site served from `docs/` folder.
 
-### 3.2 Documentazione con MkDocs
+### 3.2 Documentation with MkDocs
 ```bash
 pip install mkdocs mkdocs-material
 mkdocs new docs
-# Personalizza docs/mkdocs.yml
+# Customize docs/mkdocs.yml
 mkdocs gh-deploy
 ```
 
-### 3.3 Landing Page (nis2shield.com) ✅ COMPLETATO
-> **Stato**: Landing page creata in `docs/index.html` con design dark theme Tailwind CSS.
-> Include: Hero section, Features (Forensic Logging, Active Defense, SIEM Ready), How it Works, Code Preview.
+### 3.3 Landing Page (nis2shield.com) ✅ COMPLETED
+> **Status**: Landing page created in `docs/index.html` with Tailwind CSS dark theme design.
+> Includes: Hero section, Features (Forensic Logging, Active Defense, SIEM Ready), How it Works, Code Preview.
 
 ---
 
-## 4. Promuovi il Progetto
+## 4. Promote the Project
 
 ### 4.1 Social / Community
-- [ ] Post su LinkedIn (in italiano, focus su NIS2 compliance)
-- [ ] Post su Twitter/X con hashtag #NIS2 #Django #OpenSource
-- [ ] Condividi su Reddit r/django e r/Python
-- [ ] Scrivi un articolo su Medium o Dev.to
-- [ ] Proponi un talk a PyCon Italia
+- [ ] Post on LinkedIn (focus on NIS2 compliance)
+- [ ] Post on Twitter/X with hashtags #NIS2 #Django #OpenSource
+- [ ] Share on Reddit r/django and r/Python
+- [ ] Write an article on Medium or Dev.to
+- [ ] Propose a talk at PyCon
 
 ### 4.2 SEO / Discoverability
-- [x] Aggiungi il progetto su https://djangopackages.org/ ✅ COMPLETATO
-- [ ] Crea una pagina su https://awesome-django.com
-- [ ] Rispondi a domande su Stack Overflow relative a Django + NIS2
+- [x] Add project to https://djangopackages.org/ ✅ COMPLETED
+- [ ] Create a page on https://awesome-django.com
+- [ ] Answer Stack Overflow questions related to Django + NIS2
 
 ---
 
-## 5. Roadmap Futura
+## 5. Future Roadmap
 
-### v0.3.0 - Miglioramenti Core ✅ COMPLETATO (26 Dicembre 2025)
-- [x] Aggiungere supporto per più formati SIEM (QRadar, Graylog, Sumo Logic, Datadog)
-- [x] Implementare sliding window rate limiting
-- [x] Aggiungere webhook per notifiche real-time (Slack, Teams, Discord)
+### v0.3.0 - Core Improvements ✅ COMPLETED (December 26, 2025)
+- [x] Add support for more SIEM formats (QRadar, Graylog, Sumo Logic, Datadog)
+- [x] Implement sliding window rate limiting
+- [x] Add webhooks for real-time notifications (Slack, Teams, Discord)
 
-### v0.4.0 - Compliance Avanzata
-- [ ] Report di conformità PDF automatico
-- [ ] Integrazione con CSIRT italiani
-- [ ] Dashboard web integrata (non solo Docker)
+### v0.4.0 - Advanced Compliance
+- [ ] Automatic PDF compliance report
+- [ ] Integration with national CSIRTs
+- [ ] Integrated web dashboard (not just Docker)
 
 ### v1.0.0 - Production Ready
-- [ ] Audit di sicurezza professionale
-- [ ] Documentazione completa in inglese e italiano
-- [ ] Certificazione / attestazione NIS2
+- [ ] Professional security audit
+- [ ] Full documentation in English
+- [ ] NIS2 certification / attestation
 
 ---
 
-## 6. Checklist Giornaliera
+## 6. Daily Checklist
 
 ```
-[ ] Controlla issues e PR su GitHub
-[ ] Rispondi a email security@nis2shield.com
-[ ] Monitora stelle e fork
-[ ] Aggiorna dipendenze se necessario
+[ ] Check issues and PRs on GitHub
+[ ] Respond to email security@nis2shield.com
+[ ] Monitor stars and forks
+[ ] Update dependencies if necessary
 ```
 
 ---
 
-## Link Utili
+## Useful Links
 
-| Risorsa | URL |
+| Resource | URL |
 |---------|-----|
 | GitHub | https://github.com/nis2shield/django-nis2-shield |
 | PyPI | https://pypi.org/project/django-nis2-shield/ ✅ LIVE |
-| Dominio | https://nis2shield.com ✅ LIVE |
+| Domain | https://nis2shield.com ✅ LIVE |
 | Email | security@nis2shield.com |
 
 ---
 
-*Buon lavoro con Django NIS2 Shield!* 🛡️
+*Happy coding with Django NIS2 Shield!* 🛡️
 
 ---
 
-## 7. React NIS2 Guard ✅ COMPLETATO (26 Dicembre 2025)
+## 7. React NIS2 Guard ✅ COMPLETED (December 26, 2025)
 
-### 7.1 Libreria React Pubblicata
-- [x] `@nis2shield/react-guard` v0.2.0 pubblicata su npm
-- [x] GitHub repo `nis2shield/react-guard` con topics
-- [x] Demo app funzionante
+### 7.1 React Library Published
+- [x] `@nis2shield/react-guard` v0.2.0 published on npm
+- [x] GitHub repo `nis2shield/react-guard` with topics
+- [x] Working demo app
 
-### 7.2 Componenti Implementati
-| Componente | Descrizione |
+### 7.2 Implemented Components
+| Component | Description |
 |------------|-------------|
 | `SessionWatchdog` | Idle detection, tab napping |
-| `AuditBoundary` | React Error Boundary con telemetria |
-| `SecurityBanner` | Warning HTTPS e browser obsoleti |
+| `AuditBoundary` | React Error Boundary with telemetry |
+| `SecurityBanner` | HTTPS warning and outdated browser detection |
 | `useSecureStorage` | AES-GCM encrypted localStorage |
 | `useSecureInput` | Anti-paste, autocomplete off |
 | `useDeviceFingerprint` | Canvas hash, WebGL, session hijacking |
 
-### 7.3 Website Ristrutturato
-- [x] Migrato a repo dedicata `nis2shield.github.io`
-- [x] Hub landing con Django + React cards
-- [x] Sezione `/django/` con docs
-- [x] Sezione `/react-guard/` con docs
+### 7.3 Restructured Website
+- [x] Migrated to dedicated repo `nis2shield.github.io`
+- [x] Hub landing with Django + React cards
+- [x] `/django/` section with docs
+- [x] `/react-guard/` section with docs
 
 ---
 
-## 8. Next Steps - Ecosistema NIS2 Shield
+## 8. Next Steps - NIS2 Shield Ecosystem
 
-### 🔥 Alta Priorità
-- [ ] **Tag v0.2.0 su react-guard**
+### 🔥 High Priority
+- [ ] **Tag v0.2.0 on react-guard**
   ```bash
   git tag v0.2.0 && git push origin v0.2.0
   ```
-- [ ] **Badge nei README** (npm version, build status)
-- [ ] **Configurare git author corretto**
+- [ ] **Badges in README** (npm version, build status)
+- [ ] **Configure correct git author**
 
-### 📈 Media Priorità
-- [ ] **Full-stack demo Docker** (Django + React comunicanti)
-- [ ] **Post LinkedIn/Twitter** per annuncio
-- [ ] **Test per SecurityBanner** (unico componente senza test)
+### 📈 Medium Priority
+- [ ] **Full-stack Docker demo** (Django + React communicating)
+- [ ] **LinkedIn/Twitter Post** for announcement
+- [ ] **Tests for SecurityBanner** (only component without tests)
 
-### 🎯 Lungo Termine
-- [ ] **Video demo** (2-3 minuti)
+### 🎯 Long Term
+- [ ] **Video demo** (2-3 minutes)
 - [ ] **Awesome lists** (awesome-django, awesome-react)
 - [ ] **Vue.js Guard** / **FastAPI middleware**
 
 ---
 
-## Link Ecosistema Completo
+## Complete Ecosystem Links
 
-| Risorsa | URL |
+| Resource | URL |
 |---------|-----|
 | **Django** PyPI | https://pypi.org/project/django-nis2-shield/ |
 | **Django** GitHub | https://github.com/nis2shield/django-nis2-shield |
@@ -258,4 +259,3 @@ mkdocs gh-deploy
 | **React** GitHub | https://github.com/nis2shield/react-guard |
 | **Website** | https://nis2shield.com |
 | **Website** GitHub | https://github.com/nis2shield/nis2shield.github.io |
-

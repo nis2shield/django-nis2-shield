@@ -19,6 +19,33 @@ Companies subject to NIS2 Directive need **demonstrable compliance**. This middl
 
 > **Part of the NIS2 Shield Ecosystem**: Use with [`@nis2shield/react-guard`](https://github.com/nis2shield/react-guard) for client-side protection and [`nis2shield/infrastructure`](https://github.com/nis2shield/infrastructure) for a full-stack, audited implementation.
 
+```
+┌─────────────────────────────────────────────────────────────┐
+│                        Frontend                              │
+│  @nis2shield/react-guard                                    │
+│  ├── SessionWatchdog (idle detection)                       │
+│  ├── AuditBoundary (crash reports)                         │
+│  └── → POST /api/nis2/telemetry/                           │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                  Backend (NIS2 Adapter)                      │
+│  **django-nis2-shield**                                     │
+│  ├── ForensicLogger (HMAC signed logs)                     │
+│  ├── RateLimiter, SessionGuard, TorBlocker                 │
+│  └── → SIEM (Elasticsearch, Splunk, QRadar, etc.)          │
+└─────────────────────────────────────────────────────────────┘
+                            │
+                            ▼
+┌─────────────────────────────────────────────────────────────┐
+│                    Infrastructure                            │
+│  nis2shield/infrastructure                                  │
+│  ├── Centralized Logging (ELK/Splunk)                       │
+│  └── Audited Deployment (Terraform/Helm)                    │
+└─────────────────────────────────────────────────────────────┘
+```
+
 ## ✨ Key Features
 
 ### 🔒 Forensic Logger

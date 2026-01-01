@@ -8,6 +8,18 @@ logger = logging.getLogger('django_nis2_shield')
 class Command(BaseCommand):
     help = 'Updates the list of Tor Exit Nodes for the NIS2 Shield.'
 
+    """
+    Downloads and caches the latest Tor Exit Node list from the Tor Project.
+    Essential for the 'Block Tor' active defense mechanism.
+
+    - **Source**: check.torproject.org
+    - **Cache Duration**: 24 hours
+    - **Usage**: Run via cron job daily (e.g., @daily)
+
+    Usage:
+        python manage.py update_threat_list
+    """
+
     def handle(self, *args, **options):
         url = "https://check.torproject.org/torbulkexitlist"
         self.stdout.write(f"Downloading Tor Exit Nodes from {url}...")

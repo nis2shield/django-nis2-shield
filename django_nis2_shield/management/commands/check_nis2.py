@@ -5,6 +5,20 @@ import sys
 class Command(BaseCommand):
     help = 'Audits the Django configuration for NIS2 compliance.'
 
+    """
+    Runs a compliance audit against the current Django project settings.
+    Checks for critical security configurations mandated by NIS2 Directive.
+
+    Checks Performed:
+    - **DEBUG Mode**: Must be False in production.
+    - **Host Security**: ALLOWED_HOSTS validation.
+    - **Cookie Security**: Secure flags for Session and CSRF cookies.
+    - **Password Strength**: Minimum validation requirements.
+
+    Usage:
+        python manage.py check_nis2
+    """
+
     def handle(self, *args, **options):
         self.stdout.write(self.style.SUCCESS('[NIS2 SHIELD AUDIT REPORT]'))
         self.stdout.write('------------------------------------------------')

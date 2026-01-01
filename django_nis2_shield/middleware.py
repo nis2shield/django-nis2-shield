@@ -13,30 +13,38 @@ logger = logging.getLogger('django_nis2_shield')
 
 class Nis2GuardMiddleware:
     """
-    NIS2 compliance middleware for Django providing forensic logging, 
-    rate limiting, session protection, and MFA enforcement.
-    
-    Intercepts every request, applies active defense measures, and logs
-    structured JSON with HMAC-SHA256 integrity signatures.
-    
-    Examples:
-        Basic setup in settings.py:
-        
-        MIDDLEWARE = [
-            'django.middleware.security.SecurityMiddleware',
-            'django.contrib.sessions.middleware.SessionMiddleware',
-            'django_nis2_shield.middleware.Nis2GuardMiddleware',  # Add here
-            'django.middleware.common.CommonMiddleware',
-            ...
-        ]
-        
-        NIS2_SHIELD = {
-            'INTEGRITY_KEY': 'your-secret-hmac-key',
-            'ENCRYPTION_KEY': Fernet.generate_key(),
-            'ANONYMIZE_IPS': True,
-            'ENABLE_RATE_LIMIT': True,
-            'RATE_LIMIT_THRESHOLD': 100,
-        }
+    NIS2 compliance middleware for Django.
+    Provides forensic logging (Art 21.2.h), rate limiting, session protection, and MFA gates.
+
+    Intercepts every request to:
+    1.  **Block** Tor exit nodes and malicious IPs.
+    2.  **Rate Limit** excessive requests (Token Bucket).
+    3.  **Validate** session integrity (IP/User-Agent binding).
+    4.  **Enforce MFA** on critical routes.
+    5.  **Log** secure, signed JSON audit trails.
+
+    Configuration (`settings.py`):
+    ------------------------------
+    ```python
+    NIS2_SHIELD = {
+        # Crypto Keys (Required)
+        'INTEGRITY_KEY': os.environ['NIS2_HMAC_KEY'],       # HMAC-SHA256 signing key
+        'ENCRYPTION_KEY': os.environ['NIS2_ENC_KEY'],       # AES-256 PII encryption key
+
+        # Privacy (Art 21.2.e)
+        'ANONYMIZE_IPS': True,                              # Mask last octet (e.g., 1.2.3.0)
+
+        # Active Defense
+        'ENABLE_RATE_LIMIT': True,
+        'RATE_LIMIT_THRESHOLD': 100,                        # Requests per minute
+        'BLOCK_TOR': True,                                  # Block known Tor exit nodes
+
+        # MFA Gatekeeper (Art 21.2.d)
+        'ENFORCE_MFA_ROUTES': ['/admin/', '/finance/'],     # Paths requiring MFA
+        'MFA_SESSION_FLAG': 'is_verified_mfa',              # Session key to check
+        'MFA_REDIRECT_URL': '/mfa/verify/',                 # Where to send unverified users
+    }
+    ```
     """
     def __init__(self, get_response):
         self.get_response = get_response

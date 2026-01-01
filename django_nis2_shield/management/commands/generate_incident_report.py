@@ -6,11 +6,21 @@ import datetime
 import re
 
 class Command(BaseCommand):
-    help = 'Generates an incident report based on recent logs (Simulated for MVP).'
+    help = 'Generates an incident report based on recent logs.'
+
+    """
+    Generates a NIS2-compliant "Early Warning" incident report (Art 23).
+    Scans internal logs/simulated storage for rate limit blocks and session hijacks.
+
+    Output format: JSON (compatible with SIEM ingestion).
+
+    Usage:
+        python manage.py generate_incident_report --hours=24 --output=report.json
+    """
 
     def add_arguments(self, parser):
-        parser.add_argument('--hours', type=int, default=24, help='Lookback period in hours')
-        parser.add_argument('--output', type=str, default=None, help='Output file path')
+        parser.add_argument('--hours', type=int, default=24, help='Lookback period in hours (Default: 24)')
+        parser.add_argument('--output', type=str, default=None, help='File path to write JSON report')
 
     def handle(self, *args, **options):
         hours = options['hours']

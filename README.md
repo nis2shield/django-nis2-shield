@@ -7,21 +7,17 @@
 [![PiWheels](https://img.shields.io/badge/piwheels-available-orange.svg)](https://piwheels.org/project/django-nis2-shield/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-**The "Security-First" Middleware for NIS2 Compliance.**
+### The "Security-First" Middleware for NIS2 Compliance.
 
-## Why this package?
+Companies subject to NIS2 Directive need **demonstrable compliance**. This middleware provides:
 
-Companies subject to NIS2 Directive need demonstrable compliance with strict logging and monitoring requirements. This middleware provides:
+1.  **Forensic logging** with HMAC-SHA256 integrity and PII encryption (Art. 21.2.h)
+2.  **Rate limiting** to prevent DoS/Brute Force attacks (Art. 21.2.e)
+3.  **Session Guard** to detect hijacking via IP/User-Agent validation (Art. 21.2.a)
+4.  **MFA Gatekeeper** for sensitive routes (Art. 21.2.j)
+5.  **Multi-SIEM Presets**: Ready-to-use configs for Splunk, Datadog, QRadar.
 
-1. **Forensic logging** with HMAC-SHA256 integrity and PII encryption (Art. 21.2.h)
-2. **Rate limiting** to prevent DoS/Brute Force attacks (Art. 21.2.e)
-3. **Session Guard** to detect hijacking attempts (Art. 21.2.a)
-4. **MFA Gatekeeper** for sensitive routes (Art. 21.2.j)
-5. **SIEM integration** with presets for Elasticsearch, Splunk, QRadar, Datadog
-
-`django-nis2-shield` is a plug-and-play library designed to help Django applications meet the technical requirements of the NIS2 Directive.
-
-> **Part of the NIS2 Shield Ecosystem**: Use with [infrastructure](https://github.com/nis2shield/infrastructure) for **Demonstrable Compliance** (audited via `tfsec`) and [@nis2shield/react-guard](https://github.com/nis2shield/react-guard) for client-side protection.
+> **Part of the NIS2 Shield Ecosystem**: Use with [`@nis2shield/react-guard`](https://github.com/nis2shield/react-guard) for client-side protection and [`nis2shield/infrastructure`](https://github.com/nis2shield/infrastructure) for a full-stack, audited implementation.
 
 ## ✨ Key Features
 

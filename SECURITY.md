@@ -2,54 +2,29 @@
 
 ## Supported Versions
 
-| Version | Supported |
-|---------|-----------|
-| 0.3.x   | ✅ Yes    |
-| 0.2.x   | ✅ Yes    |
-| 0.1.x   | ❌ No     |
-| < 0.1   | ❌ No     |
+| Version | Supported          |
+| ------- | ------------------ |
+| v0.3.x  | :white_check_mark: |
+| v0.2.x  | :x:                |
+| < v0.2  | :x:                |
 
 ## Reporting a Vulnerability
 
-**⚠️ Do NOT open public issues for security vulnerabilities.**
+Please report sensitive security issues via email to **security@nis2shield.com** or by opening a [GitHub Security Advisory](https://github.com/nis2shield/django-nis2-shield/security/advisories/new).
 
-If you discover a security vulnerability in Django NIS2 Shield:
+**DO NOT create public GitHub issues for security vulnerabilities.**
 
-1. **Email**: Send a detailed description to `security@nis2shield.com`
-2. **Subject**: `[SECURITY] Django NIS2 Shield - Brief description`
-3. **Include**:
-   - Description of the vulnerability
-   - Steps to reproduce
-   - Potential impact
-   - Proposed fix (if any)
+## Security Updates & Mailing List
 
-### What to Expect
+We proactively notify users about:
+- Critical security patches (CVEs)
+- NIS2/DORA regulatory updates affecting compliance logic
+- Major breaking changes
 
-| Phase | Timeframe |
-|-------|-----------|
-| Acknowledgment | 48 hours |
-| Initial assessment | 7 days |
-| Fix released | 30 days (depending on severity) |
+👉 **[Subscribe to Security Updates](https://buttondown.email/nis2shield)**
 
-### Responsible Disclosure
+## Response Timeline
 
-- We ask that you do not publicly disclose the vulnerability before a fix is released.
-- You will be credited in the CHANGELOG (if you wish).
-- We will not take legal action against researchers acting in good faith.
-
-## Best Practices for Users
-
-1. **Update regularly**: `pip install --upgrade django-nis2-shield`
-2. **Secure keys**: Do not use default keys in production.
-3. **Monitor logs**: Generated logs must be actively analyzed.
-4. **Defense in depth**: This library is a layer, not a complete solution.
-
-## Security Audit
-
-This project **has not yet undergone a professional security audit**.
-
-If you are a security expert and want to contribute with a review, you are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md).
-
----
-
-*This policy is inspired by [security.txt](https://securitytxt.org/) best practices.*
+1.  **Acknowledgment:** Within 24 hours.
+2.  **Assessment:** Within 72 hours.
+3.  **Patch:** Critical issues patched within 7 days.

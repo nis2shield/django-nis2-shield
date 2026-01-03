@@ -101,14 +101,17 @@ class Nis2JsonFormatter(logging.Formatter):
         self.encrypt_pii = nis2_conf.get('ENCRYPT_PII', True)
 
     def format(self, record):
+        from datetime import datetime
+        
+        # NIS2 V1.0 Schema Root
         log_data = {
-            'timestamp': self.formatTime(record, self.datefmt),
+            'timestamp': datetime.utcnow().isoformat() + "Z", # ISO 8601 UTC
             'level': record.levelname,
-            'logger': record.name,
-            'message': record.getMessage(),
+            'component': 'NIS2-SHIELD-DJANGO',
+            'event_id': 'UNKNOWN' # Should be overwritten by record.nis2_data
         }
 
-        # Add extra fields if present (passed via extra={...})
+        # Add extra fields (request, response, user)
         if hasattr(record, 'nis2_data'):
             log_data.update(record.nis2_data)
 
@@ -116,16 +119,17 @@ class Nis2JsonFormatter(logging.Formatter):
         if self.encrypt_pii and self.encryptor.fernet:
             log_data = encrypt_pii_fields(log_data, self.encryptor, self.pii_fields)
 
-        # Serialize to JSON
-        json_output = json.dumps(log_data)
+        # Serialize to JSON (No Integrity Hash yet)
+        # CRITICAL: Use compact separators (no spaces) to match .NET/Node behavior for HMAC consistency
+        json_output = json.dumps(log_data, separators=(',', ':'))
 
         # Sign the log entry
         signature = self.signer.sign(json_output)
         
-        # Final structure
-        final_log = {
-            'log': json.loads(json_output),
-            'integrity_hash': signature
-        }
+        # Final structure: Content + Hash
+        # Note: We re-parse to inject hash into the object as per schema preference, 
+        # or keep it separate. Schema V1.0 defines 'integrity_hash' as a field.
+        final_log = json.loads(json_output)
+        final_log['integrity_hash'] = signature
         
         return json.dumps(final_log)

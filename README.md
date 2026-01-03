@@ -49,7 +49,7 @@ Companies subject to NIS2 Directive need **demonstrable compliance**. This middl
 ## ✨ Key Features
 
 ### 🔒 Forensic Logger
-- Structured logs (JSON or CEF) signed with HMAC-SHA256
+- Standardized logs (`NIS2-JSON-SCHEMA v1.0`) signed with HMAC-SHA256
 - Automatic PII field encryption (GDPR compliant)
 - Configurable IP anonymization
 

@@ -157,22 +157,22 @@ class Nis2GuardMiddleware:
             # RESULT
             status_code = response.status_code
             
-            # Construct Log Payload
+            # Construct Log Payload (NIS2 V1.0 Schema)
             log_payload = {
-                'who': {
+                'event_id': 'HTTP_ACCESS', # Default event
+                'request': {
+                    'method': method,
+                    'url': url,
                     'ip': client_ip,
-                    'user_id': user_id,
                     'user_agent': request.META.get('HTTP_USER_AGENT', '')
                 },
-                'what': {
-                    'url': url,
-                    'method': method,
-                    'view': view_name
-                },
-                'result': {
+                'response': {
                     'status': status_code,
-                    'duration_seconds': round(duration, 4)
-                }
+                    'duration_ms': round(duration * 1000, 2) # Convert seconds to ms
+                },
+                'user': {
+                    'id': user_id
+                } if user_id != 'anonymous' else None
             }
             
             # Send to Logger (The Formatter will handle signing/encryption)

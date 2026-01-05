@@ -1,4 +1,4 @@
-__version__ = "0.3.1"
+__version__ = "1.1.2"
 
 # Core exports
 from .middleware import Nis2GuardMiddleware

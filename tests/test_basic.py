@@ -54,9 +54,9 @@ class TestNis2Components(unittest.TestCase):
         output = formatter.format(record)
         data = json.loads(output)
         
-        self.assertIn('log', data)
         self.assertIn('integrity_hash', data)
-        self.assertEqual(data['log']['foo'], 'bar')
+        # Verify flat structure (keys merged at root)
+        self.assertEqual(data['foo'], 'bar')
 
     def test_middleware(self):
         factory = RequestFactory()
@@ -84,8 +84,8 @@ class TestNis2Components(unittest.TestCase):
             self.assertIn('nis2_data', kwargs['extra'])
             payload = kwargs['extra']['nis2_data']
             
-            self.assertEqual(payload['what']['url'], '/test-url')
-            self.assertEqual(payload['who']['ip'], '127.0.0.0') # Loopback anonymized
+            self.assertEqual(payload['request']['url'], '/test-url')
+            self.assertEqual(payload['request']['ip'], '127.0.0.0') # Loopback anonymized
 
 if __name__ == '__main__':
     unittest.main()

@@ -127,8 +127,8 @@ class TestPIIEncryption(unittest.TestCase):
         data = json.loads(output)
         
         # Check that PII fields are encrypted
-        self.assertIn('[ENCRYPTED]', data['log']['who']['user_id'])
-        self.assertIn('[ENCRYPTED]', data['log']['who']['ip'])
+        self.assertIn('[ENCRYPTED]', data['who']['user_id'])
+        self.assertIn('[ENCRYPTED]', data['who']['ip'])
         # Check integrity hash exists
         self.assertIn('integrity_hash', data)
 

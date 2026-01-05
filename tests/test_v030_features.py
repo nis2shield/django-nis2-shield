@@ -218,7 +218,7 @@ class TestPackageExports(SimpleTestCase):
     def test_version(self):
         """Test version is correctly set."""
         import django_nis2_shield
-        self.assertEqual(django_nis2_shield.__version__, '0.3.1')
+        self.assertEqual(django_nis2_shield.__version__, '1.1.2')
     
     def test_core_exports(self):
         """Test core classes are exported."""
